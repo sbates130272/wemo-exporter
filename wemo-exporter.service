@@ -1,0 +1,16 @@
+Description=wemo-exporter Prometheus exporter
+
+[Service]
+Restart=always
+
+# Run as stephen
+User=batesste
+Group=batesste
+
+WorkingDirectory=/home/batesste/wemo-exporter
+
+# Compose up
+ExecStart=/home/batesste/wemo-exporter/wemo-exporter
+
+[Install]
+WantedBy=multi-user.target
