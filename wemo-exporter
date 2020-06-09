@@ -8,16 +8,25 @@
 # https://github.com/sbates130272/wemo-exporter
 #
 # requires pywemo (pip install pywemo)
-#
+# requires https://github.com/prometheus/client_python (pip install prometheus_client)
 
+from prometheus_client import start_http_server, Gauge
 import pywemo
+import time
+
+WEMO_POWER = Gauge('wemo_power', 'Wemo Insight Power (W)')
 
 if __name__=="__main__":
 
     devices = pywemo.discover_devices()
     print(devices)
+    start_http_server(9632)
 
-    devices[0].update_insight_params()
-    current_power_mw = float(devices[0].current_power)
+    while True:
 
-    print current_power_mw
+        devices[0].update_insight_params()
+        current_power_mw = float(devices[0].current_power)
+
+        print current_power_mw
+        WEMO_POWER.set(current_power_mw/1000.0)
+        time.sleep(10)
