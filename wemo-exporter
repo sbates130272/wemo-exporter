@@ -1,0 +1,23 @@
+#!/usr/bin/python
+#
+# (c) Stephen Bates, 2020
+#
+# wemo-exporter
+# -------------
+#
+# https://github.com/sbates130272/wemo-exporter
+#
+# requires pywemo (pip install pywemo)
+#
+
+import pywemo
+
+if __name__=="__main__":
+
+    devices = pywemo.discover_devices()
+    print(devices)
+
+    devices[0].update_insight_params()
+    current_power_mw = float(devices[0].current_power)
+
+    print current_power_mw
