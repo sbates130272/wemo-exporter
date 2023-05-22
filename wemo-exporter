@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 #
 # (c) Stephen Bates, 2020
 #
@@ -14,7 +14,7 @@ from prometheus_client import start_http_server, Gauge
 import pywemo
 import time
 
-IP_ADDRESS="192.168.0.31"
+IP_ADDRESS="10.0.0.167"
 
 WEMO_POWER = Gauge('wemo_power', 'Wemo Insight Power (W)')
 
@@ -37,6 +37,6 @@ if __name__=="__main__":
         device.update_insight_params()
         current_power_mw = float(device.current_power)
 
-        print current_power_mw
+        print(current_power_mw)
         WEMO_POWER.set(current_power_mw/1000.0)
         time.sleep(10)
